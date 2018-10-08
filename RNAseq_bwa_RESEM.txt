@@ -1,0 +1,30 @@
+bwa index -p ../genome_assembly/Neocallimastix_bwa_ref ../genome_assembly/Neosp1_jgi_assembly.fasta
+
+
+
+
+bwa aln ../genome_assembly/Neocallimastix_bwa_ref  Sample_NHZY.R1_sequence.fq.gz >Sample_NHZY.R1_bwa.sai -t 18
+bwa aln ../genome_assembly/Neocallimastix_bwa_ref  Sample_NHZY.R2_sequence.fq.gz >Sample_NHZY.R2_bwa.sai -t 18
+
+bwa sampe ../genome_assembly/Neocallimastix_bwa_ref Sample_NHZY.R1_bwa.sai Sample_NHZY.R2_bwa.sai Sample_NHZY.R1_sequence.fq.gz Sample_NHZY.R2_sequence.fq.gz >Sample_NHZY_bwa.sam 
+
+samtools view -bS Sample_NHZY_bwa.sam >Sample_NHZY_bwa.bam
+samtools sort Sample_NHZY_bwa.bam Sample_NHZY_bwa_sorted.bam
+samtools index Sample_NHZY_bwa_sorted.bam
+samtools flagstat Sample_NHZY_bwa.bam >Sample_NHZY_mapped_bwa_summary
+
+
+
+
+
+
+
+bowtie2-build -f ../Genomes_assembled/Penicillium_transcripts.fa ../Genomes_assembled/Penicillium_transcripts
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_R1_paired_Filtered.fq.gz -2 7047-03-09_R2_paired_Filtered.fq.gz -S 7047-03-09_bowtie2.sam    
+                      
+samtools view -bS 7047-03-09_bowtie2.sam >7047-03-09_bowtie2.bam 
+samtools flagstat 7047-03-09_bowtie2.bam >7047-03-09_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-09_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_bowtie2_bowtie2F                  
+
+

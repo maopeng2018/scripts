@@ -1,0 +1,26 @@
+#!/bin/bash
+bwa index -p ../Genomes_assembled/Penicillium-assembly_bwa_ref ../Genomes_assembled/Penicillium-assembly.fa
+/Data/genome_assembly/RSEM-master/rsem-prepare-reference --gtf ../Genomes_assembled/annotation-Penicillium.gtf --bowtie2 ../Genomes_assembled/Penicillium-assembly.fa ../Genomes_assembled/Penicillium_bowtie2_ref
+
+./fastX/fastq_quality_filter -Q 33 -q 20 -p 80  -v -i 7047-03-09_S1_L003_R1_001.fastq -o 7047-03-09_S1_L003_R1_filtered.fastq
+./fastX/fastq_quality_filter -Q 33 -q 20 -p 80  -v -i 7047-03-09_S1_L003_R2_001.fastq -o 7047-03-09_S1_L003_R2_filtered.fastq
+
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L003_R1_filtered.fastq >7047-03-09_S1_L003_R1_filter_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L003_R2_filtered.fastq >7047-03-09_S1_L003_R2_filter_bwa.sai -t 18
+
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L003_R1_filter_bwa.sai 7047-03-09_S1_L003_R2_filter_bwa.sai 7047-03-09_S1_L003_R1_filtered.fastq 7047-03-09_S1_L003_R2_filtered.fastq >7047-03-09_S1_L003_filtered_bwa.sam 
+samtools view -bS 7047-03-09_S1_L003_filtered_bwa.sam >7047-03-09_S1_L003_filtered_bwa.bam
+samtools flagstat 7047-03-09_S1_L003_filtered_bwa.bam >7047-03-09_S1_L003_filtered_bwa_summary
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L003_R1_filtered.fastq -2 7047-03-09_S1_L003_R2_filtered.fastq -S 7047-03-09_S1_L003_filtered_bowtie2.sam
+                          
+samtools view -bS 7047-03-09_S1_L003_filtered_bowtie2.sam >7047-03-09_S1_L003_filtered_bowtie2.bam 
+ 
+samtools flagstat 7047-03-09_S1_L003_filtered_bowtie2.bam >7047-03-09_S1_L003_filtered_mapped_bowtie2_summary 
+ 
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-09_S1_L003_filtered_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L003_filtered_bowtie2F                  
+
+
+

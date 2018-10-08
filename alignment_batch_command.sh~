@@ -1,0 +1,486 @@
+
+### Firstly, we creat database reference for bwa and bowtie2
+### bwa index -p ../Genomes_assembled/Penicillium-assembly_bwa_ref ../Genomes_assembled/Penicillium-assembly.fa
+## /Data/genome_assembly/RSEM-master/rsem-prepare-reference --gtf ../Genomes_assembled/annotation-Penicillium.gtf --bowtie2 ../Genomes_assembled/Penicillium-assembly.fa ../Genomes_assembled/Penicillium_bowtie2_ref
+
+### Secondly, we start to align
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L001_R1_002.fastq.gz >7047-03-13_S5_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L001_R2_002.fastq.gz >7047-03-13_S5_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L001_R1_002_bwa.sai 7047-03-13_S5_L001_R2_002_bwa.sai 7047-03-13_S5_L001_R1_002.fastq.gz 7047-03-13_S5_L001_R2_002.fastq.gz >7047-03-13_S5_L001_002_bwa.sam 
+samtools view -bS 7047-03-13_S5_L001_002_bwa.sam > 7047-03-13_S5_L001_002_bwa.bam
+samtools flagstat 7047-03-13_S5_L001_002_bwa.bam >7047-03-13_S5_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L001_R1_002.fastq.gz -2 7047-03-13_S5_L001_R2_002.fastq.gz -S 7047-03-13_S5_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L001_002_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L001_002_bowtie2.sam > 7047-03-13_S5_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L001_002_bowtie2.bam >7047-03-13_S5_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L007_R1_001.fastq.gz >7047-03-11_S3_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L007_R2_001.fastq.gz >7047-03-11_S3_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L007_R1_001_bwa.sai 7047-03-11_S3_L007_R2_001_bwa.sai 7047-03-11_S3_L007_R1_001.fastq.gz 7047-03-11_S3_L007_R2_001.fastq.gz >7047-03-11_S3_L007_001_bwa.sam 
+samtools view -bS 7047-03-11_S3_L007_001_bwa.sam > 7047-03-11_S3_L007_001_bwa.bam
+samtools flagstat 7047-03-11_S3_L007_001_bwa.bam >7047-03-11_S3_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L007_R1_001.fastq.gz -2 7047-03-11_S3_L007_R2_001.fastq.gz -S 7047-03-11_S3_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L007_001_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L007_001_bowtie2.sam > 7047-03-11_S3_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L007_001_bowtie2.bam >7047-03-11_S3_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L003_R1_001.fastq.gz >7047-03-09_S1_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L003_R2_001.fastq.gz >7047-03-09_S1_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L003_R1_001_bwa.sai 7047-03-09_S1_L003_R2_001_bwa.sai 7047-03-09_S1_L003_R1_001.fastq.gz 7047-03-09_S1_L003_R2_001.fastq.gz >7047-03-09_S1_L003_001_bwa.sam 
+samtools view -bS 7047-03-09_S1_L003_001_bwa.sam > 7047-03-09_S1_L003_001_bwa.bam
+samtools flagstat 7047-03-09_S1_L003_001_bwa.bam >7047-03-09_S1_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L003_R1_001.fastq.gz -2 7047-03-09_S1_L003_R2_001.fastq.gz -S 7047-03-09_S1_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L003_001_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L003_001_bowtie2.sam > 7047-03-09_S1_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L003_001_bowtie2.bam >7047-03-09_S1_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L007_R1_001.fastq.gz >7047-03-12_S4_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L007_R2_001.fastq.gz >7047-03-12_S4_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L007_R1_001_bwa.sai 7047-03-12_S4_L007_R2_001_bwa.sai 7047-03-12_S4_L007_R1_001.fastq.gz 7047-03-12_S4_L007_R2_001.fastq.gz >7047-03-12_S4_L007_001_bwa.sam 
+samtools view -bS 7047-03-12_S4_L007_001_bwa.sam > 7047-03-12_S4_L007_001_bwa.bam
+samtools flagstat 7047-03-12_S4_L007_001_bwa.bam >7047-03-12_S4_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L007_R1_001.fastq.gz -2 7047-03-12_S4_L007_R2_001.fastq.gz -S 7047-03-12_S4_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L007_001_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L007_001_bowtie2.sam > 7047-03-12_S4_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L007_001_bowtie2.bam >7047-03-12_S4_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L006_R1_001.fastq.gz >7047-03-16_S8_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L006_R2_001.fastq.gz >7047-03-16_S8_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L006_R1_001_bwa.sai 7047-03-16_S8_L006_R2_001_bwa.sai 7047-03-16_S8_L006_R1_001.fastq.gz 7047-03-16_S8_L006_R2_001.fastq.gz >7047-03-16_S8_L006_001_bwa.sam 
+samtools view -bS 7047-03-16_S8_L006_001_bwa.sam > 7047-03-16_S8_L006_001_bwa.bam
+samtools flagstat 7047-03-16_S8_L006_001_bwa.bam >7047-03-16_S8_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L006_R1_001.fastq.gz -2 7047-03-16_S8_L006_R2_001.fastq.gz -S 7047-03-16_S8_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L006_001_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L006_001_bowtie2.sam > 7047-03-16_S8_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L006_001_bowtie2.bam >7047-03-16_S8_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L001_R1_002.fastq.gz >7047-03-12_S4_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L001_R2_002.fastq.gz >7047-03-12_S4_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L001_R1_002_bwa.sai 7047-03-12_S4_L001_R2_002_bwa.sai 7047-03-12_S4_L001_R1_002.fastq.gz 7047-03-12_S4_L001_R2_002.fastq.gz >7047-03-12_S4_L001_002_bwa.sam 
+samtools view -bS 7047-03-12_S4_L001_002_bwa.sam > 7047-03-12_S4_L001_002_bwa.bam
+samtools flagstat 7047-03-12_S4_L001_002_bwa.bam >7047-03-12_S4_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L001_R1_002.fastq.gz -2 7047-03-12_S4_L001_R2_002.fastq.gz -S 7047-03-12_S4_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L001_002_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L001_002_bowtie2.sam > 7047-03-12_S4_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L001_002_bowtie2.bam >7047-03-12_S4_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L003_R1_001.fastq.gz >7047-03-13_S5_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L003_R2_001.fastq.gz >7047-03-13_S5_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L003_R1_001_bwa.sai 7047-03-13_S5_L003_R2_001_bwa.sai 7047-03-13_S5_L003_R1_001.fastq.gz 7047-03-13_S5_L003_R2_001.fastq.gz >7047-03-13_S5_L003_001_bwa.sam 
+samtools view -bS 7047-03-13_S5_L003_001_bwa.sam > 7047-03-13_S5_L003_001_bwa.bam
+samtools flagstat 7047-03-13_S5_L003_001_bwa.bam >7047-03-13_S5_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L003_R1_001.fastq.gz -2 7047-03-13_S5_L003_R2_001.fastq.gz -S 7047-03-13_S5_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L003_001_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L003_001_bowtie2.sam > 7047-03-13_S5_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L003_001_bowtie2.bam >7047-03-13_S5_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L002_R1_001.fastq.gz >7047-03-12_S4_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L002_R2_001.fastq.gz >7047-03-12_S4_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L002_R1_001_bwa.sai 7047-03-12_S4_L002_R2_001_bwa.sai 7047-03-12_S4_L002_R1_001.fastq.gz 7047-03-12_S4_L002_R2_001.fastq.gz >7047-03-12_S4_L002_001_bwa.sam 
+samtools view -bS 7047-03-12_S4_L002_001_bwa.sam > 7047-03-12_S4_L002_001_bwa.bam
+samtools flagstat 7047-03-12_S4_L002_001_bwa.bam >7047-03-12_S4_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L002_R1_001.fastq.gz -2 7047-03-12_S4_L002_R2_001.fastq.gz -S 7047-03-12_S4_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L002_001_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L002_001_bowtie2.sam > 7047-03-12_S4_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L002_001_bowtie2.bam >7047-03-12_S4_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L007_R1_001.fastq.gz >7047-03-14_S6_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L007_R2_001.fastq.gz >7047-03-14_S6_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L007_R1_001_bwa.sai 7047-03-14_S6_L007_R2_001_bwa.sai 7047-03-14_S6_L007_R1_001.fastq.gz 7047-03-14_S6_L007_R2_001.fastq.gz >7047-03-14_S6_L007_001_bwa.sam 
+samtools view -bS 7047-03-14_S6_L007_001_bwa.sam > 7047-03-14_S6_L007_001_bwa.bam
+samtools flagstat 7047-03-14_S6_L007_001_bwa.bam >7047-03-14_S6_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L007_R1_001.fastq.gz -2 7047-03-14_S6_L007_R2_001.fastq.gz -S 7047-03-14_S6_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L007_001_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L007_001_bowtie2.sam > 7047-03-14_S6_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L007_001_bowtie2.bam >7047-03-14_S6_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L006_R1_001.fastq.gz >7047-03-11_S3_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L006_R2_001.fastq.gz >7047-03-11_S3_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L006_R1_001_bwa.sai 7047-03-11_S3_L006_R2_001_bwa.sai 7047-03-11_S3_L006_R1_001.fastq.gz 7047-03-11_S3_L006_R2_001.fastq.gz >7047-03-11_S3_L006_001_bwa.sam 
+samtools view -bS 7047-03-11_S3_L006_001_bwa.sam > 7047-03-11_S3_L006_001_bwa.bam
+samtools flagstat 7047-03-11_S3_L006_001_bwa.bam >7047-03-11_S3_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L006_R1_001.fastq.gz -2 7047-03-11_S3_L006_R2_001.fastq.gz -S 7047-03-11_S3_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L006_001_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L006_001_bowtie2.sam > 7047-03-11_S3_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L006_001_bowtie2.bam >7047-03-11_S3_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L001_R1_001.fastq.gz >7047-03-12_S4_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L001_R2_001.fastq.gz >7047-03-12_S4_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L001_R1_001_bwa.sai 7047-03-12_S4_L001_R2_001_bwa.sai 7047-03-12_S4_L001_R1_001.fastq.gz 7047-03-12_S4_L001_R2_001.fastq.gz >7047-03-12_S4_L001_001_bwa.sam 
+samtools view -bS 7047-03-12_S4_L001_001_bwa.sam > 7047-03-12_S4_L001_001_bwa.bam
+samtools flagstat 7047-03-12_S4_L001_001_bwa.bam >7047-03-12_S4_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L001_R1_001.fastq.gz -2 7047-03-12_S4_L001_R2_001.fastq.gz -S 7047-03-12_S4_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L001_001_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L001_001_bowtie2.sam > 7047-03-12_S4_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L001_001_bowtie2.bam >7047-03-12_S4_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L002_R1_001.fastq.gz >7047-03-16_S8_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L002_R2_001.fastq.gz >7047-03-16_S8_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L002_R1_001_bwa.sai 7047-03-16_S8_L002_R2_001_bwa.sai 7047-03-16_S8_L002_R1_001.fastq.gz 7047-03-16_S8_L002_R2_001.fastq.gz >7047-03-16_S8_L002_001_bwa.sam 
+samtools view -bS 7047-03-16_S8_L002_001_bwa.sam > 7047-03-16_S8_L002_001_bwa.bam
+samtools flagstat 7047-03-16_S8_L002_001_bwa.bam >7047-03-16_S8_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L002_R1_001.fastq.gz -2 7047-03-16_S8_L002_R2_001.fastq.gz -S 7047-03-16_S8_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L002_001_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L002_001_bowtie2.sam > 7047-03-16_S8_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L002_001_bowtie2.bam >7047-03-16_S8_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L006_R1_001.fastq.gz >7047-03-10_S2_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L006_R2_001.fastq.gz >7047-03-10_S2_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L006_R1_001_bwa.sai 7047-03-10_S2_L006_R2_001_bwa.sai 7047-03-10_S2_L006_R1_001.fastq.gz 7047-03-10_S2_L006_R2_001.fastq.gz >7047-03-10_S2_L006_001_bwa.sam 
+samtools view -bS 7047-03-10_S2_L006_001_bwa.sam > 7047-03-10_S2_L006_001_bwa.bam
+samtools flagstat 7047-03-10_S2_L006_001_bwa.bam >7047-03-10_S2_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L006_R1_001.fastq.gz -2 7047-03-10_S2_L006_R2_001.fastq.gz -S 7047-03-10_S2_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L006_001_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L006_001_bowtie2.sam > 7047-03-10_S2_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L006_001_bowtie2.bam >7047-03-10_S2_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L002_R1_001.fastq.gz >7047-03-15_S7_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L002_R2_001.fastq.gz >7047-03-15_S7_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L002_R1_001_bwa.sai 7047-03-15_S7_L002_R2_001_bwa.sai 7047-03-15_S7_L002_R1_001.fastq.gz 7047-03-15_S7_L002_R2_001.fastq.gz >7047-03-15_S7_L002_001_bwa.sam 
+samtools view -bS 7047-03-15_S7_L002_001_bwa.sam > 7047-03-15_S7_L002_001_bwa.bam
+samtools flagstat 7047-03-15_S7_L002_001_bwa.bam >7047-03-15_S7_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L002_R1_001.fastq.gz -2 7047-03-15_S7_L002_R2_001.fastq.gz -S 7047-03-15_S7_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L002_001_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L002_001_bowtie2.sam > 7047-03-15_S7_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L002_001_bowtie2.bam >7047-03-15_S7_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L006_R1_001.fastq.gz >7047-03-15_S7_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L006_R2_001.fastq.gz >7047-03-15_S7_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L006_R1_001_bwa.sai 7047-03-15_S7_L006_R2_001_bwa.sai 7047-03-15_S7_L006_R1_001.fastq.gz 7047-03-15_S7_L006_R2_001.fastq.gz >7047-03-15_S7_L006_001_bwa.sam 
+samtools view -bS 7047-03-15_S7_L006_001_bwa.sam > 7047-03-15_S7_L006_001_bwa.bam
+samtools flagstat 7047-03-15_S7_L006_001_bwa.bam >7047-03-15_S7_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L006_R1_001.fastq.gz -2 7047-03-15_S7_L006_R2_001.fastq.gz -S 7047-03-15_S7_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L006_001_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L006_001_bowtie2.sam > 7047-03-15_S7_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L006_001_bowtie2.bam >7047-03-15_S7_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L007_R1_001.fastq.gz >7047-03-15_S7_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L007_R2_001.fastq.gz >7047-03-15_S7_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L007_R1_001_bwa.sai 7047-03-15_S7_L007_R2_001_bwa.sai 7047-03-15_S7_L007_R1_001.fastq.gz 7047-03-15_S7_L007_R2_001.fastq.gz >7047-03-15_S7_L007_001_bwa.sam 
+samtools view -bS 7047-03-15_S7_L007_001_bwa.sam > 7047-03-15_S7_L007_001_bwa.bam
+samtools flagstat 7047-03-15_S7_L007_001_bwa.bam >7047-03-15_S7_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L007_R1_001.fastq.gz -2 7047-03-15_S7_L007_R2_001.fastq.gz -S 7047-03-15_S7_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L007_001_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L007_001_bowtie2.sam > 7047-03-15_S7_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L007_001_bowtie2.bam >7047-03-15_S7_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L003_R1_001.fastq.gz >7047-03-14_S6_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L003_R2_001.fastq.gz >7047-03-14_S6_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L003_R1_001_bwa.sai 7047-03-14_S6_L003_R2_001_bwa.sai 7047-03-14_S6_L003_R1_001.fastq.gz 7047-03-14_S6_L003_R2_001.fastq.gz >7047-03-14_S6_L003_001_bwa.sam 
+samtools view -bS 7047-03-14_S6_L003_001_bwa.sam > 7047-03-14_S6_L003_001_bwa.bam
+samtools flagstat 7047-03-14_S6_L003_001_bwa.bam >7047-03-14_S6_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L003_R1_001.fastq.gz -2 7047-03-14_S6_L003_R2_001.fastq.gz -S 7047-03-14_S6_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L003_001_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L003_001_bowtie2.sam > 7047-03-14_S6_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L003_001_bowtie2.bam >7047-03-14_S6_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L007_R1_001.fastq.gz >7047-03-10_S2_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L007_R2_001.fastq.gz >7047-03-10_S2_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L007_R1_001_bwa.sai 7047-03-10_S2_L007_R2_001_bwa.sai 7047-03-10_S2_L007_R1_001.fastq.gz 7047-03-10_S2_L007_R2_001.fastq.gz >7047-03-10_S2_L007_001_bwa.sam 
+samtools view -bS 7047-03-10_S2_L007_001_bwa.sam > 7047-03-10_S2_L007_001_bwa.bam
+samtools flagstat 7047-03-10_S2_L007_001_bwa.bam >7047-03-10_S2_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L007_R1_001.fastq.gz -2 7047-03-10_S2_L007_R2_001.fastq.gz -S 7047-03-10_S2_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L007_001_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L007_001_bowtie2.sam > 7047-03-10_S2_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L007_001_bowtie2.bam >7047-03-10_S2_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L001_R1_001.fastq.gz >7047-03-14_S6_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L001_R2_001.fastq.gz >7047-03-14_S6_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L001_R1_001_bwa.sai 7047-03-14_S6_L001_R2_001_bwa.sai 7047-03-14_S6_L001_R1_001.fastq.gz 7047-03-14_S6_L001_R2_001.fastq.gz >7047-03-14_S6_L001_001_bwa.sam 
+samtools view -bS 7047-03-14_S6_L001_001_bwa.sam > 7047-03-14_S6_L001_001_bwa.bam
+samtools flagstat 7047-03-14_S6_L001_001_bwa.bam >7047-03-14_S6_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L001_R1_001.fastq.gz -2 7047-03-14_S6_L001_R2_001.fastq.gz -S 7047-03-14_S6_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L001_001_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L001_001_bowtie2.sam > 7047-03-14_S6_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L001_001_bowtie2.bam >7047-03-14_S6_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L003_R1_001.fastq.gz >7047-03-10_S2_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L003_R2_001.fastq.gz >7047-03-10_S2_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L003_R1_001_bwa.sai 7047-03-10_S2_L003_R2_001_bwa.sai 7047-03-10_S2_L003_R1_001.fastq.gz 7047-03-10_S2_L003_R2_001.fastq.gz >7047-03-10_S2_L003_001_bwa.sam 
+samtools view -bS 7047-03-10_S2_L003_001_bwa.sam > 7047-03-10_S2_L003_001_bwa.bam
+samtools flagstat 7047-03-10_S2_L003_001_bwa.bam >7047-03-10_S2_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L003_R1_001.fastq.gz -2 7047-03-10_S2_L003_R2_001.fastq.gz -S 7047-03-10_S2_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L003_001_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L003_001_bowtie2.sam > 7047-03-10_S2_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L003_001_bowtie2.bam >7047-03-10_S2_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L001_R1_002.fastq.gz >7047-03-14_S6_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L001_R2_002.fastq.gz >7047-03-14_S6_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L001_R1_002_bwa.sai 7047-03-14_S6_L001_R2_002_bwa.sai 7047-03-14_S6_L001_R1_002.fastq.gz 7047-03-14_S6_L001_R2_002.fastq.gz >7047-03-14_S6_L001_002_bwa.sam 
+samtools view -bS 7047-03-14_S6_L001_002_bwa.sam > 7047-03-14_S6_L001_002_bwa.bam
+samtools flagstat 7047-03-14_S6_L001_002_bwa.bam >7047-03-14_S6_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L001_R1_002.fastq.gz -2 7047-03-14_S6_L001_R2_002.fastq.gz -S 7047-03-14_S6_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L001_002_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L001_002_bowtie2.sam > 7047-03-14_S6_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L001_002_bowtie2.bam >7047-03-14_S6_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L006_R1_001.fastq.gz >7047-03-14_S6_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L006_R2_001.fastq.gz >7047-03-14_S6_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L006_R1_001_bwa.sai 7047-03-14_S6_L006_R2_001_bwa.sai 7047-03-14_S6_L006_R1_001.fastq.gz 7047-03-14_S6_L006_R2_001.fastq.gz >7047-03-14_S6_L006_001_bwa.sam 
+samtools view -bS 7047-03-14_S6_L006_001_bwa.sam > 7047-03-14_S6_L006_001_bwa.bam
+samtools flagstat 7047-03-14_S6_L006_001_bwa.bam >7047-03-14_S6_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L006_R1_001.fastq.gz -2 7047-03-14_S6_L006_R2_001.fastq.gz -S 7047-03-14_S6_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L006_001_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L006_001_bowtie2.sam > 7047-03-14_S6_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L006_001_bowtie2.bam >7047-03-14_S6_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L006_R1_001.fastq.gz >7047-03-09_S1_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L006_R2_001.fastq.gz >7047-03-09_S1_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L006_R1_001_bwa.sai 7047-03-09_S1_L006_R2_001_bwa.sai 7047-03-09_S1_L006_R1_001.fastq.gz 7047-03-09_S1_L006_R2_001.fastq.gz >7047-03-09_S1_L006_001_bwa.sam 
+samtools view -bS 7047-03-09_S1_L006_001_bwa.sam > 7047-03-09_S1_L006_001_bwa.bam
+samtools flagstat 7047-03-09_S1_L006_001_bwa.bam >7047-03-09_S1_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L006_R1_001.fastq.gz -2 7047-03-09_S1_L006_R2_001.fastq.gz -S 7047-03-09_S1_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L006_001_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L006_001_bowtie2.sam > 7047-03-09_S1_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L006_001_bowtie2.bam >7047-03-09_S1_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L002_R1_001.fastq.gz >7047-03-11_S3_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L002_R2_001.fastq.gz >7047-03-11_S3_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L002_R1_001_bwa.sai 7047-03-11_S3_L002_R2_001_bwa.sai 7047-03-11_S3_L002_R1_001.fastq.gz 7047-03-11_S3_L002_R2_001.fastq.gz >7047-03-11_S3_L002_001_bwa.sam 
+samtools view -bS 7047-03-11_S3_L002_001_bwa.sam > 7047-03-11_S3_L002_001_bwa.bam
+samtools flagstat 7047-03-11_S3_L002_001_bwa.bam >7047-03-11_S3_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L002_R1_001.fastq.gz -2 7047-03-11_S3_L002_R2_001.fastq.gz -S 7047-03-11_S3_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L002_001_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L002_001_bowtie2.sam > 7047-03-11_S3_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L002_001_bowtie2.bam >7047-03-11_S3_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L001_R1_001.fastq.gz >7047-03-15_S7_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L001_R2_001.fastq.gz >7047-03-15_S7_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L001_R1_001_bwa.sai 7047-03-15_S7_L001_R2_001_bwa.sai 7047-03-15_S7_L001_R1_001.fastq.gz 7047-03-15_S7_L001_R2_001.fastq.gz >7047-03-15_S7_L001_001_bwa.sam 
+samtools view -bS 7047-03-15_S7_L001_001_bwa.sam > 7047-03-15_S7_L001_001_bwa.bam
+samtools flagstat 7047-03-15_S7_L001_001_bwa.bam >7047-03-15_S7_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L001_R1_001.fastq.gz -2 7047-03-15_S7_L001_R2_001.fastq.gz -S 7047-03-15_S7_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L001_001_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L001_001_bowtie2.sam > 7047-03-15_S7_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L001_001_bowtie2.bam >7047-03-15_S7_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L007_R1_001.fastq.gz >7047-03-09_S1_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L007_R2_001.fastq.gz >7047-03-09_S1_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L007_R1_001_bwa.sai 7047-03-09_S1_L007_R2_001_bwa.sai 7047-03-09_S1_L007_R1_001.fastq.gz 7047-03-09_S1_L007_R2_001.fastq.gz >7047-03-09_S1_L007_001_bwa.sam 
+samtools view -bS 7047-03-09_S1_L007_001_bwa.sam > 7047-03-09_S1_L007_001_bwa.bam
+samtools flagstat 7047-03-09_S1_L007_001_bwa.bam >7047-03-09_S1_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L007_R1_001.fastq.gz -2 7047-03-09_S1_L007_R2_001.fastq.gz -S 7047-03-09_S1_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L007_001_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L007_001_bowtie2.sam > 7047-03-09_S1_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L007_001_bowtie2.bam >7047-03-09_S1_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L007_R1_001.fastq.gz >7047-03-13_S5_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L007_R2_001.fastq.gz >7047-03-13_S5_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L007_R1_001_bwa.sai 7047-03-13_S5_L007_R2_001_bwa.sai 7047-03-13_S5_L007_R1_001.fastq.gz 7047-03-13_S5_L007_R2_001.fastq.gz >7047-03-13_S5_L007_001_bwa.sam 
+samtools view -bS 7047-03-13_S5_L007_001_bwa.sam > 7047-03-13_S5_L007_001_bwa.bam
+samtools flagstat 7047-03-13_S5_L007_001_bwa.bam >7047-03-13_S5_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L007_R1_001.fastq.gz -2 7047-03-13_S5_L007_R2_001.fastq.gz -S 7047-03-13_S5_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L007_001_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L007_001_bowtie2.sam > 7047-03-13_S5_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L007_001_bowtie2.bam >7047-03-13_S5_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L006_R1_001.fastq.gz >7047-03-13_S5_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L006_R2_001.fastq.gz >7047-03-13_S5_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L006_R1_001_bwa.sai 7047-03-13_S5_L006_R2_001_bwa.sai 7047-03-13_S5_L006_R1_001.fastq.gz 7047-03-13_S5_L006_R2_001.fastq.gz >7047-03-13_S5_L006_001_bwa.sam 
+samtools view -bS 7047-03-13_S5_L006_001_bwa.sam > 7047-03-13_S5_L006_001_bwa.bam
+samtools flagstat 7047-03-13_S5_L006_001_bwa.bam >7047-03-13_S5_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L006_R1_001.fastq.gz -2 7047-03-13_S5_L006_R2_001.fastq.gz -S 7047-03-13_S5_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L006_001_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L006_001_bowtie2.sam > 7047-03-13_S5_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L006_001_bowtie2.bam >7047-03-13_S5_L006_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L001_R1_001.fastq.gz >7047-03-16_S8_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L001_R2_001.fastq.gz >7047-03-16_S8_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L001_R1_001_bwa.sai 7047-03-16_S8_L001_R2_001_bwa.sai 7047-03-16_S8_L001_R1_001.fastq.gz 7047-03-16_S8_L001_R2_001.fastq.gz >7047-03-16_S8_L001_001_bwa.sam 
+samtools view -bS 7047-03-16_S8_L001_001_bwa.sam > 7047-03-16_S8_L001_001_bwa.bam
+samtools flagstat 7047-03-16_S8_L001_001_bwa.bam >7047-03-16_S8_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L001_R1_001.fastq.gz -2 7047-03-16_S8_L001_R2_001.fastq.gz -S 7047-03-16_S8_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L001_001_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L001_001_bowtie2.sam > 7047-03-16_S8_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L001_001_bowtie2.bam >7047-03-16_S8_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L002_R1_001.fastq.gz >7047-03-10_S2_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L002_R2_001.fastq.gz >7047-03-10_S2_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L002_R1_001_bwa.sai 7047-03-10_S2_L002_R2_001_bwa.sai 7047-03-10_S2_L002_R1_001.fastq.gz 7047-03-10_S2_L002_R2_001.fastq.gz >7047-03-10_S2_L002_001_bwa.sam 
+samtools view -bS 7047-03-10_S2_L002_001_bwa.sam > 7047-03-10_S2_L002_001_bwa.bam
+samtools flagstat 7047-03-10_S2_L002_001_bwa.bam >7047-03-10_S2_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L002_R1_001.fastq.gz -2 7047-03-10_S2_L002_R2_001.fastq.gz -S 7047-03-10_S2_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L002_001_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L002_001_bowtie2.sam > 7047-03-10_S2_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L002_001_bowtie2.bam >7047-03-10_S2_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L001_R1_001.fastq.gz >7047-03-10_S2_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L001_R2_001.fastq.gz >7047-03-10_S2_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L001_R1_001_bwa.sai 7047-03-10_S2_L001_R2_001_bwa.sai 7047-03-10_S2_L001_R1_001.fastq.gz 7047-03-10_S2_L001_R2_001.fastq.gz >7047-03-10_S2_L001_001_bwa.sam 
+samtools view -bS 7047-03-10_S2_L001_001_bwa.sam > 7047-03-10_S2_L001_001_bwa.bam
+samtools flagstat 7047-03-10_S2_L001_001_bwa.bam >7047-03-10_S2_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L001_R1_001.fastq.gz -2 7047-03-10_S2_L001_R2_001.fastq.gz -S 7047-03-10_S2_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L001_001_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L001_001_bowtie2.sam > 7047-03-10_S2_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L001_001_bowtie2.bam >7047-03-10_S2_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L001_R1_002.fastq.gz >7047-03-09_S1_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L001_R2_002.fastq.gz >7047-03-09_S1_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L001_R1_002_bwa.sai 7047-03-09_S1_L001_R2_002_bwa.sai 7047-03-09_S1_L001_R1_002.fastq.gz 7047-03-09_S1_L001_R2_002.fastq.gz >7047-03-09_S1_L001_002_bwa.sam 
+samtools view -bS 7047-03-09_S1_L001_002_bwa.sam > 7047-03-09_S1_L001_002_bwa.bam
+samtools flagstat 7047-03-09_S1_L001_002_bwa.bam >7047-03-09_S1_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L001_R1_002.fastq.gz -2 7047-03-09_S1_L001_R2_002.fastq.gz -S 7047-03-09_S1_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L001_002_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L001_002_bowtie2.sam > 7047-03-09_S1_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L001_002_bowtie2.bam >7047-03-09_S1_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L001_R1_002.fastq.gz >7047-03-11_S3_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L001_R2_002.fastq.gz >7047-03-11_S3_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L001_R1_002_bwa.sai 7047-03-11_S3_L001_R2_002_bwa.sai 7047-03-11_S3_L001_R1_002.fastq.gz 7047-03-11_S3_L001_R2_002.fastq.gz >7047-03-11_S3_L001_002_bwa.sam 
+samtools view -bS 7047-03-11_S3_L001_002_bwa.sam > 7047-03-11_S3_L001_002_bwa.bam
+samtools flagstat 7047-03-11_S3_L001_002_bwa.bam >7047-03-11_S3_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L001_R1_002.fastq.gz -2 7047-03-11_S3_L001_R2_002.fastq.gz -S 7047-03-11_S3_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L001_002_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L001_002_bowtie2.sam > 7047-03-11_S3_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L001_002_bowtie2.bam >7047-03-11_S3_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L001_R1_002.fastq.gz >7047-03-16_S8_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L001_R2_002.fastq.gz >7047-03-16_S8_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L001_R1_002_bwa.sai 7047-03-16_S8_L001_R2_002_bwa.sai 7047-03-16_S8_L001_R1_002.fastq.gz 7047-03-16_S8_L001_R2_002.fastq.gz >7047-03-16_S8_L001_002_bwa.sam 
+samtools view -bS 7047-03-16_S8_L001_002_bwa.sam > 7047-03-16_S8_L001_002_bwa.bam
+samtools flagstat 7047-03-16_S8_L001_002_bwa.bam >7047-03-16_S8_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L001_R1_002.fastq.gz -2 7047-03-16_S8_L001_R2_002.fastq.gz -S 7047-03-16_S8_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L001_002_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L001_002_bowtie2.sam > 7047-03-16_S8_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L001_002_bowtie2.bam >7047-03-16_S8_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L001_R1_002.fastq.gz >7047-03-10_S2_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_S2_L001_R2_002.fastq.gz >7047-03-10_S2_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_S2_L001_R1_002_bwa.sai 7047-03-10_S2_L001_R2_002_bwa.sai 7047-03-10_S2_L001_R1_002.fastq.gz 7047-03-10_S2_L001_R2_002.fastq.gz >7047-03-10_S2_L001_002_bwa.sam 
+samtools view -bS 7047-03-10_S2_L001_002_bwa.sam > 7047-03-10_S2_L001_002_bwa.bam
+samtools flagstat 7047-03-10_S2_L001_002_bwa.bam >7047-03-10_S2_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_S2_L001_R1_002.fastq.gz -2 7047-03-10_S2_L001_R2_002.fastq.gz -S 7047-03-10_S2_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-10_S2_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_S2_L001_002_bowtie2F                      
+samtools view -bS 7047-03-10_S2_L001_002_bowtie2.sam > 7047-03-10_S2_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-10_S2_L001_002_bowtie2.bam >7047-03-10_S2_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L001_R1_001.fastq.gz >7047-03-09_S1_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L001_R2_001.fastq.gz >7047-03-09_S1_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L001_R1_001_bwa.sai 7047-03-09_S1_L001_R2_001_bwa.sai 7047-03-09_S1_L001_R1_001.fastq.gz 7047-03-09_S1_L001_R2_001.fastq.gz >7047-03-09_S1_L001_001_bwa.sam 
+samtools view -bS 7047-03-09_S1_L001_001_bwa.sam > 7047-03-09_S1_L001_001_bwa.bam
+samtools flagstat 7047-03-09_S1_L001_001_bwa.bam >7047-03-09_S1_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L001_R1_001.fastq.gz -2 7047-03-09_S1_L001_R2_001.fastq.gz -S 7047-03-09_S1_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L001_001_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L001_001_bowtie2.sam > 7047-03-09_S1_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L001_001_bowtie2.bam >7047-03-09_S1_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L001_R1_002.fastq.gz >7047-03-15_S7_L001_R1_002_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L001_R2_002.fastq.gz >7047-03-15_S7_L001_R2_002_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L001_R1_002_bwa.sai 7047-03-15_S7_L001_R2_002_bwa.sai 7047-03-15_S7_L001_R1_002.fastq.gz 7047-03-15_S7_L001_R2_002.fastq.gz >7047-03-15_S7_L001_002_bwa.sam 
+samtools view -bS 7047-03-15_S7_L001_002_bwa.sam > 7047-03-15_S7_L001_002_bwa.bam
+samtools flagstat 7047-03-15_S7_L001_002_bwa.bam >7047-03-15_S7_L001_002_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L001_R1_002.fastq.gz -2 7047-03-15_S7_L001_R2_002.fastq.gz -S 7047-03-15_S7_L001_002_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L001_002_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L001_002_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L001_002_bowtie2.sam > 7047-03-15_S7_L001_002_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L001_002_bowtie2.bam >7047-03-15_S7_L001_002_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L002_R1_001.fastq.gz >7047-03-09_S1_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_S1_L002_R2_001.fastq.gz >7047-03-09_S1_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_S1_L002_R1_001_bwa.sai 7047-03-09_S1_L002_R2_001_bwa.sai 7047-03-09_S1_L002_R1_001.fastq.gz 7047-03-09_S1_L002_R2_001.fastq.gz >7047-03-09_S1_L002_001_bwa.sam 
+samtools view -bS 7047-03-09_S1_L002_001_bwa.sam > 7047-03-09_S1_L002_001_bwa.bam
+samtools flagstat 7047-03-09_S1_L002_001_bwa.bam >7047-03-09_S1_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_S1_L002_R1_001.fastq.gz -2 7047-03-09_S1_L002_R2_001.fastq.gz -S 7047-03-09_S1_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-09_S1_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_S1_L002_001_bowtie2F                      
+samtools view -bS 7047-03-09_S1_L002_001_bowtie2.sam > 7047-03-09_S1_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-09_S1_L002_001_bowtie2.bam >7047-03-09_S1_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L003_R1_001.fastq.gz >7047-03-15_S7_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_S7_L003_R2_001.fastq.gz >7047-03-15_S7_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_S7_L003_R1_001_bwa.sai 7047-03-15_S7_L003_R2_001_bwa.sai 7047-03-15_S7_L003_R1_001.fastq.gz 7047-03-15_S7_L003_R2_001.fastq.gz >7047-03-15_S7_L003_001_bwa.sam 
+samtools view -bS 7047-03-15_S7_L003_001_bwa.sam > 7047-03-15_S7_L003_001_bwa.bam
+samtools flagstat 7047-03-15_S7_L003_001_bwa.bam >7047-03-15_S7_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_S7_L003_R1_001.fastq.gz -2 7047-03-15_S7_L003_R2_001.fastq.gz -S 7047-03-15_S7_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-15_S7_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_S7_L003_001_bowtie2F                      
+samtools view -bS 7047-03-15_S7_L003_001_bowtie2.sam > 7047-03-15_S7_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-15_S7_L003_001_bowtie2.bam >7047-03-15_S7_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L002_R1_001.fastq.gz >7047-03-13_S5_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L002_R2_001.fastq.gz >7047-03-13_S5_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L002_R1_001_bwa.sai 7047-03-13_S5_L002_R2_001_bwa.sai 7047-03-13_S5_L002_R1_001.fastq.gz 7047-03-13_S5_L002_R2_001.fastq.gz >7047-03-13_S5_L002_001_bwa.sam 
+samtools view -bS 7047-03-13_S5_L002_001_bwa.sam > 7047-03-13_S5_L002_001_bwa.bam
+samtools flagstat 7047-03-13_S5_L002_001_bwa.bam >7047-03-13_S5_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L002_R1_001.fastq.gz -2 7047-03-13_S5_L002_R2_001.fastq.gz -S 7047-03-13_S5_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L002_001_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L002_001_bowtie2.sam > 7047-03-13_S5_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L002_001_bowtie2.bam >7047-03-13_S5_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L007_R1_001.fastq.gz >7047-03-16_S8_L007_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L007_R2_001.fastq.gz >7047-03-16_S8_L007_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L007_R1_001_bwa.sai 7047-03-16_S8_L007_R2_001_bwa.sai 7047-03-16_S8_L007_R1_001.fastq.gz 7047-03-16_S8_L007_R2_001.fastq.gz >7047-03-16_S8_L007_001_bwa.sam 
+samtools view -bS 7047-03-16_S8_L007_001_bwa.sam > 7047-03-16_S8_L007_001_bwa.bam
+samtools flagstat 7047-03-16_S8_L007_001_bwa.bam >7047-03-16_S8_L007_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L007_R1_001.fastq.gz -2 7047-03-16_S8_L007_R2_001.fastq.gz -S 7047-03-16_S8_L007_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L007_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L007_001_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L007_001_bowtie2.sam > 7047-03-16_S8_L007_001_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L007_001_bowtie2.bam >7047-03-16_S8_L007_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L002_R1_001.fastq.gz >7047-03-14_S6_L002_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_S6_L002_R2_001.fastq.gz >7047-03-14_S6_L002_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_S6_L002_R1_001_bwa.sai 7047-03-14_S6_L002_R2_001_bwa.sai 7047-03-14_S6_L002_R1_001.fastq.gz 7047-03-14_S6_L002_R2_001.fastq.gz >7047-03-14_S6_L002_001_bwa.sam 
+samtools view -bS 7047-03-14_S6_L002_001_bwa.sam > 7047-03-14_S6_L002_001_bwa.bam
+samtools flagstat 7047-03-14_S6_L002_001_bwa.bam >7047-03-14_S6_L002_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_S6_L002_R1_001.fastq.gz -2 7047-03-14_S6_L002_R2_001.fastq.gz -S 7047-03-14_S6_L002_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-14_S6_L002_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_S6_L002_001_bowtie2F                      
+samtools view -bS 7047-03-14_S6_L002_001_bowtie2.sam > 7047-03-14_S6_L002_001_bowtie2.bam                      
+samtools flagstat 7047-03-14_S6_L002_001_bowtie2.bam >7047-03-14_S6_L002_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L001_R1_001.fastq.gz >7047-03-13_S5_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_S5_L001_R2_001.fastq.gz >7047-03-13_S5_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_S5_L001_R1_001_bwa.sai 7047-03-13_S5_L001_R2_001_bwa.sai 7047-03-13_S5_L001_R1_001.fastq.gz 7047-03-13_S5_L001_R2_001.fastq.gz >7047-03-13_S5_L001_001_bwa.sam 
+samtools view -bS 7047-03-13_S5_L001_001_bwa.sam > 7047-03-13_S5_L001_001_bwa.bam
+samtools flagstat 7047-03-13_S5_L001_001_bwa.bam >7047-03-13_S5_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_S5_L001_R1_001.fastq.gz -2 7047-03-13_S5_L001_R2_001.fastq.gz -S 7047-03-13_S5_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-13_S5_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_S5_L001_001_bowtie2F                      
+samtools view -bS 7047-03-13_S5_L001_001_bowtie2.sam > 7047-03-13_S5_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-13_S5_L001_001_bowtie2.bam >7047-03-13_S5_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L001_R1_001.fastq.gz >7047-03-11_S3_L001_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L001_R2_001.fastq.gz >7047-03-11_S3_L001_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L001_R1_001_bwa.sai 7047-03-11_S3_L001_R2_001_bwa.sai 7047-03-11_S3_L001_R1_001.fastq.gz 7047-03-11_S3_L001_R2_001.fastq.gz >7047-03-11_S3_L001_001_bwa.sam 
+samtools view -bS 7047-03-11_S3_L001_001_bwa.sam > 7047-03-11_S3_L001_001_bwa.bam
+samtools flagstat 7047-03-11_S3_L001_001_bwa.bam >7047-03-11_S3_L001_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L001_R1_001.fastq.gz -2 7047-03-11_S3_L001_R2_001.fastq.gz -S 7047-03-11_S3_L001_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L001_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L001_001_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L001_001_bowtie2.sam > 7047-03-11_S3_L001_001_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L001_001_bowtie2.bam >7047-03-11_S3_L001_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L003_R1_001.fastq.gz >7047-03-12_S4_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L003_R2_001.fastq.gz >7047-03-12_S4_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L003_R1_001_bwa.sai 7047-03-12_S4_L003_R2_001_bwa.sai 7047-03-12_S4_L003_R1_001.fastq.gz 7047-03-12_S4_L003_R2_001.fastq.gz >7047-03-12_S4_L003_001_bwa.sam 
+samtools view -bS 7047-03-12_S4_L003_001_bwa.sam > 7047-03-12_S4_L003_001_bwa.bam
+samtools flagstat 7047-03-12_S4_L003_001_bwa.bam >7047-03-12_S4_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L003_R1_001.fastq.gz -2 7047-03-12_S4_L003_R2_001.fastq.gz -S 7047-03-12_S4_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L003_001_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L003_001_bowtie2.sam > 7047-03-12_S4_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L003_001_bowtie2.bam >7047-03-12_S4_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L003_R1_001.fastq.gz >7047-03-11_S3_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_S3_L003_R2_001.fastq.gz >7047-03-11_S3_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_S3_L003_R1_001_bwa.sai 7047-03-11_S3_L003_R2_001_bwa.sai 7047-03-11_S3_L003_R1_001.fastq.gz 7047-03-11_S3_L003_R2_001.fastq.gz >7047-03-11_S3_L003_001_bwa.sam 
+samtools view -bS 7047-03-11_S3_L003_001_bwa.sam > 7047-03-11_S3_L003_001_bwa.bam
+samtools flagstat 7047-03-11_S3_L003_001_bwa.bam >7047-03-11_S3_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_S3_L003_R1_001.fastq.gz -2 7047-03-11_S3_L003_R2_001.fastq.gz -S 7047-03-11_S3_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-11_S3_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_S3_L003_001_bowtie2F                      
+samtools view -bS 7047-03-11_S3_L003_001_bowtie2.sam > 7047-03-11_S3_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-11_S3_L003_001_bowtie2.bam >7047-03-11_S3_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L003_R1_001.fastq.gz >7047-03-16_S8_L003_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_S8_L003_R2_001.fastq.gz >7047-03-16_S8_L003_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_S8_L003_R1_001_bwa.sai 7047-03-16_S8_L003_R2_001_bwa.sai 7047-03-16_S8_L003_R1_001.fastq.gz 7047-03-16_S8_L003_R2_001.fastq.gz >7047-03-16_S8_L003_001_bwa.sam 
+samtools view -bS 7047-03-16_S8_L003_001_bwa.sam > 7047-03-16_S8_L003_001_bwa.bam
+samtools flagstat 7047-03-16_S8_L003_001_bwa.bam >7047-03-16_S8_L003_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_S8_L003_R1_001.fastq.gz -2 7047-03-16_S8_L003_R2_001.fastq.gz -S 7047-03-16_S8_L003_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-16_S8_L003_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_S8_L003_001_bowtie2F                      
+samtools view -bS 7047-03-16_S8_L003_001_bowtie2.sam > 7047-03-16_S8_L003_001_bowtie2.bam                      
+samtools flagstat 7047-03-16_S8_L003_001_bowtie2.bam >7047-03-16_S8_L003_001_mapped_bowtie2_summary 
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L006_R1_001.fastq.gz >7047-03-12_S4_L006_R1_001_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_S4_L006_R2_001.fastq.gz >7047-03-12_S4_L006_R2_001_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_S4_L006_R1_001_bwa.sai 7047-03-12_S4_L006_R2_001_bwa.sai 7047-03-12_S4_L006_R1_001.fastq.gz 7047-03-12_S4_L006_R2_001.fastq.gz >7047-03-12_S4_L006_001_bwa.sam 
+samtools view -bS 7047-03-12_S4_L006_001_bwa.sam > 7047-03-12_S4_L006_001_bwa.bam
+samtools flagstat 7047-03-12_S4_L006_001_bwa.bam >7047-03-12_S4_L006_001_mapped_bwa_summary
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_S4_L006_R1_001.fastq.gz -2 7047-03-12_S4_L006_R2_001.fastq.gz -S 7047-03-12_S4_L006_001_bowtie2.sam    
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --sam --paired-end ./7047-03-12_S4_L006_001_bowtie2.sam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_S4_L006_001_bowtie2F                      
+samtools view -bS 7047-03-12_S4_L006_001_bowtie2.sam > 7047-03-12_S4_L006_001_bowtie2.bam                      
+samtools flagstat 7047-03-12_S4_L006_001_bowtie2.bam >7047-03-12_S4_L006_001_mapped_bowtie2_summary 

@@ -1,0 +1,217 @@
+#!/bin/bash
+bwa index -p ../Genomes_assembled/Penicillium-assembly_bwa_ref ../Genomes_assembled/Penicillium-assembly.fa
+
+/Data/genome_assembly/RSEM-master/rsem-prepare-reference --gtf ../Genomes_assembled/annotation-Penicillium.gtf --bowtie2 ../Genomes_assembled/Penicillium-assembly.fa ../Genomes_assembled/Penicillium_bowtie2_ref
+
+
+
+
+
+
+cat ../Penicillium/7047-03-09*_R1_*.fastq.gz >./7047-03-09_R1.fastq.gz
+cat ../Penicillium/7047-03-09*_R2_*.fastq.gz >./7047-03-09_R2.fastq.gz
+cat ../Penicillium/7047-03-10*_R1_*.fastq.gz >./7047-03-10_R1.fastq.gz
+cat ../Penicillium/7047-03-10*_R2_*.fastq.gz >./7047-03-10_R2.fastq.gz
+cat ../Penicillium/7047-03-11*_R1_*.fastq.gz >./7047-03-11_R1.fastq.gz
+cat ../Penicillium/7047-03-11*_R2_*.fastq.gz >./7047-03-11_R2.fastq.gz
+
+cat ../Penicillium/7047-03-12*_R1_*.fastq.gz >./7047-03-12_R1.fastq.gz
+cat ../Penicillium/7047-03-12*_R2_*.fastq.gz >./7047-03-12_R2.fastq.gz
+cat ../Penicillium/7047-03-13*_R1_*.fastq.gz >./7047-03-13_R1.fastq.gz
+cat ../Penicillium/7047-03-13*_R2_*.fastq.gz >./7047-03-13_R2.fastq.gz
+cat ../Penicillium/7047-03-14*_R1_*.fastq.gz >./7047-03-14_R1.fastq.gz
+cat ../Penicillium/7047-03-14*_R2_*.fastq.gz >./7047-03-14_R2.fastq.gz
+cat ../Penicillium/7047-03-15*_R1_*.fastq.gz >./7047-03-15_R1.fastq.gz
+cat ../Penicillium/7047-03-15*_R2_*.fastq.gz >./7047-03-15_R2.fastq.gz
+cat ../Penicillium/7047-03-16*_R1_*.fastq.gz >./7047-03-16_R1.fastq.gz
+cat ../Penicillium/7047-03-16*_R2_*.fastq.gz >./7047-03-16_R2.fastq.gz
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 10 -phred33  7047-03-09_R1.fastq.gz 7047-03-09_R2.fastq.gz 7047-03-09_R1_paired_Filtered.fq.gz 7047-03-09_R1_unpaired_Filtered.fq.gz 7047-03-09_R2_paired_Filtered.fq.gz 7047-03-09_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 10 -phred33  7047-03-10_R1.fastq.gz 7047-03-10_R2.fastq.gz 7047-03-10_R1_paired_Filtered.fq.gz 7047-03-10_R1_unpaired_Filtered.fq.gz 7047-03-10_R2_paired_Filtered.fq.gz 7047-03-10_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-11_R1.fastq.gz 7047-03-11_R2.fastq.gz 7047-03-11_R1_paired_Filtered.fq.gz 7047-03-11_R1_unpaired_Filtered.fq.gz 7047-03-11_R2_paired_Filtered.fq.gz 7047-03-11_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-12_R1.fastq.gz 7047-03-12_R2.fastq.gz 7047-03-12_R1_paired_Filtered.fq.gz 7047-03-12_R1_unpaired_Filtered.fq.gz 7047-03-12_R2_paired_Filtered.fq.gz 7047-03-12_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-13_R1.fastq.gz 7047-03-13_R2.fastq.gz 7047-03-13_R1_paired_Filtered.fq.gz 7047-03-13_R1_unpaired_Filtered.fq.gz 7047-03-13_R2_paired_Filtered.fq.gz 7047-03-13_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-14_R1.fastq.gz 7047-03-14_R2.fastq.gz 7047-03-14_R1_paired_Filtered.fq.gz 7047-03-14_R1_unpaired_Filtered.fq.gz 7047-03-14_R2_paired_Filtered.fq.gz 7047-03-14_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-15_R1.fastq.gz 7047-03-15_R2.fastq.gz 7047-03-15_R1_paired_Filtered.fq.gz 7047-03-15_R1_unpaired_Filtered.fq.gz 7047-03-15_R2_paired_Filtered.fq.gz 7047-03-15_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+java -jar trimmomatic-0.36.jar PE  -threads 5 -phred33  7047-03-16_R1.fastq.gz 7047-03-16_R2.fastq.gz 7047-03-16_R1_paired_Filtered.fq.gz 7047-03-16_R1_unpaired_Filtered.fq.gz 7047-03-16_R2_paired_Filtered.fq.gz 7047-03-16_R2_unpaired_Filtered.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+
+
+
+
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-09_R1_paired_Filtered.fq.gz -2 7047-03-09_R2_paired_Filtered.fq.gz -S 7047-03-09_bowtie2.sam    
+                      
+samtools view -bS 7047-03-09_bowtie2.sam >7047-03-09_bowtie2.bam 
+samtools flagstat 7047-03-09_bowtie2.bam >7047-03-09_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-09_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-09_bowtie2_bowtie2F                  
+
+
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-10_R1_paired_Filtered.fq.gz -2 7047-03-10_R2_paired_Filtered.fq.gz -S 7047-03-10_bowtie2.sam    
+                      
+samtools view -bS 7047-03-10_bowtie2.sam >7047-03-10_bowtie2.bam 
+samtools flagstat 7047-03-10_bowtie2.bam >7047-03-10_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-10_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-10_bowtie2_bowtie2F                  
+
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-11_R1_paired_Filtered.fq.gz -2 7047-03-11_R2_paired_Filtered.fq.gz -S 7047-03-11_bowtie2.sam    
+                      
+samtools view -bS 7047-03-11_bowtie2.sam >7047-03-11_bowtie2.bam 
+samtools flagstat 7047-03-11_bowtie2.bam >7047-03-11_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-11_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-11_bowtie2_bowtie2F                  
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-12_R1_paired_Filtered.fq.gz -2 7047-03-12_R2_paired_Filtered.fq.gz -S 7047-03-12_bowtie2.sam    
+                      
+samtools view -bS 7047-03-12_bowtie2.sam >7047-03-12_bowtie2.bam 
+samtools flagstat 7047-03-12_bowtie2.bam >7047-03-12_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-12_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-12_bowtie2_bowtie2F                  
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-13_R1_paired_Filtered.fq.gz -2 7047-03-13_R2_paired_Filtered.fq.gz -S 7047-03-13_bowtie2.sam    
+                      
+samtools view -bS 7047-03-13_bowtie2.sam >7047-03-13_bowtie2.bam 
+samtools flagstat 7047-03-13_bowtie2.bam >7047-03-13_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-13_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-13_bowtie2_bowtie2F                  
+
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-14_R1_paired_Filtered.fq.gz -2 7047-03-14_R2_paired_Filtered.fq.gz -S 7047-03-14_bowtie2.sam    
+                      
+samtools view -bS 7047-03-14_bowtie2.sam >7047-03-14_bowtie2.bam 
+samtools flagstat 7047-03-14_bowtie2.bam >7047-03-14_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-14_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-14_bowtie2_bowtie2F                  
+
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-15_R1_paired_Filtered.fq.gz -2 7047-03-15_R2_paired_Filtered.fq.gz -S 7047-03-15_bowtie2.sam    
+                      
+samtools view -bS 7047-03-15_bowtie2.sam >7047-03-15_bowtie2.bam 
+samtools flagstat 7047-03-15_bowtie2.bam >7047-03-15_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-15_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-15_bowtie2_bowtie2F                  
+
+
+
+
+bowtie2 -p 18 --sensitive --dpad 0 --gbar 99999999 --mp 1,1 --np 1 --no-mixed --no-discordant -x ../Genomes_assembled/Penicillium_bowtie2_ref -1 7047-03-16_R1_paired_Filtered.fq.gz -2 7047-03-16_R2_paired_Filtered.fq.gz -S 7047-03-16_bowtie2.sam    
+                      
+samtools view -bS 7047-03-16_bowtie2.sam >7047-03-16_bowtie2.bam 
+samtools flagstat 7047-03-16_bowtie2.bam >7047-03-16_bowtie2_summary 
+
+/Data/genome_assembly/RSEM-master/rsem-calculate-expression --no-bam-output -p 18 --bam --paired-end ./7047-03-16_bowtie2.bam ../Genomes_assembled/Penicillium_bowtie2_ref 7047-03-16_bowtie2_bowtie2F                  
+
+
+
+
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_R1_paired_Filtered.fq.gz >7047-03-09_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-09_R2_paired_Filtered.fq.gz >7047-03-09_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-09_R1_bwa.sai 7047-03-09_R2_bwa.sai 7047-03-09_R1_paired_Filtered.fq.gz 7047-03-09_R2_paired_Filtered.fq.gz >7047-03-09_bwa.sam 
+
+samtools view -bS 7047-03-09_bwa.sam >7047-03-09_bwa.bam
+samtools flagstat 7047-03-09_bwa.bam >7047-03-09_mapped_bwa_summary
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_R1_paired_Filtered.fq.gz >7047-03-10_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-10_R2_paired_Filtered.fq.gz >7047-03-10_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-10_R1_bwa.sai 7047-03-10_R2_bwa.sai 7047-03-10_R1_paired_Filtered.fq.gz 7047-03-10_R2_paired_Filtered.fq.gz >7047-03-10_bwa.sam 
+
+samtools view -bS 7047-03-10_bwa.sam >7047-03-10_bwa.bam
+samtools flagstat 7047-03-10_bwa.bam >7047-03-10_mapped_bwa_summary
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_R1_paired_Filtered.fq.gz >7047-03-11_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-11_R2_paired_Filtered.fq.gz >7047-03-11_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-11_R1_bwa.sai 7047-03-11_R2_bwa.sai 7047-03-11_R1_paired_Filtered.fq.gz 7047-03-11_R2_paired_Filtered.fq.gz >7047-03-11_bwa.sam 
+
+samtools view -bS 7047-03-11_bwa.sam >7047-03-11_bwa.bam
+samtools flagstat 7047-03-11_bwa.bam >7047-03-11_mapped_bwa_summary
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_R1_paired_Filtered.fq.gz >7047-03-12_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-12_R2_paired_Filtered.fq.gz >7047-03-12_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-12_R1_bwa.sai 7047-03-12_R2_bwa.sai 7047-03-12_R1_paired_Filtered.fq.gz 7047-03-12_R2_paired_Filtered.fq.gz >7047-03-12_bwa.sam 
+
+samtools view -bS 7047-03-12_bwa.sam >7047-03-12_bwa.bam
+samtools flagstat 7047-03-12_bwa.bam >7047-03-12_mapped_bwa_summary
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_R1_paired_Filtered.fq.gz >7047-03-13_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-13_R2_paired_Filtered.fq.gz >7047-03-13_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-13_R1_bwa.sai 7047-03-13_R2_bwa.sai 7047-03-13_R1_paired_Filtered.fq.gz 7047-03-13_R2_paired_Filtered.fq.gz >7047-03-13_bwa.sam 
+
+samtools view -bS 7047-03-13_bwa.sam >7047-03-13_bwa.bam
+samtools flagstat 7047-03-13_bwa.bam >7047-03-13_mapped_bwa_summary
+
+
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_R1_paired_Filtered.fq.gz >7047-03-14_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-14_R2_paired_Filtered.fq.gz >7047-03-14_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-14_R1_bwa.sai 7047-03-14_R2_bwa.sai 7047-03-14_R1_paired_Filtered.fq.gz 7047-03-14_R2_paired_Filtered.fq.gz >7047-03-14_bwa.sam 
+
+samtools view -bS 7047-03-14_bwa.sam >7047-03-14_bwa.bam
+samtools flagstat 7047-03-14_bwa.bam >7047-03-14_mapped_bwa_summary
+
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_R1_paired_Filtered.fq.gz >7047-03-15_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-15_R2_paired_Filtered.fq.gz >7047-03-15_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-15_R1_bwa.sai 7047-03-15_R2_bwa.sai 7047-03-15_R1_paired_Filtered.fq.gz 7047-03-15_R2_paired_Filtered.fq.gz >7047-03-15_bwa.sam 
+
+samtools view -bS 7047-03-15_bwa.sam >7047-03-15_bwa.bam
+samtools flagstat 7047-03-15_bwa.bam >7047-03-15_mapped_bwa_summary
+
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_R1_paired_Filtered.fq.gz >7047-03-16_R1_bwa.sai -t 18
+bwa aln ../Genomes_assembled/Penicillium-assembly_bwa_ref  7047-03-16_R2_paired_Filtered.fq.gz >7047-03-16_R2_bwa.sai -t 18
+bwa sampe ../Genomes_assembled/Penicillium-assembly_bwa_ref 7047-03-16_R1_bwa.sai 7047-03-16_R2_bwa.sai 7047-03-16_R1_paired_Filtered.fq.gz 7047-03-16_R2_paired_Filtered.fq.gz >7047-03-16_bwa.sam 
+
+samtools view -bS 7047-03-16_bwa.sam >7047-03-16_bwa.bam
+samtools flagstat 7047-03-16_bwa.bam >7047-03-16_mapped_bwa_summary
+
+
+
+

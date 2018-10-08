@@ -1,0 +1,55 @@
+bowtie2-build -f ./Dicsqu464_1_AssemblyScaffolds_Repeatmasked.fasta ./Dicsqu464_bowtie_index 
+
+bowtie2 -p 18 -x ./Dicsqu464_bowtie_index -U ./12203.6.244180.ATAGCGG.filter-RNA.fastq.gz -S 12203.6.244180.ATAGCGG.filter-RNA.fastq.gz.sam    
+
+
+for i in *fastq.gz
+do
+echo $i
+bowtie2 -p 18 -x ./Dicsqu464_bowtie_index -U $i -S $i.sam
+done;
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+/Data/genome_assembly/RSEM-master/rsem-prepare-reference --gff3 ../Dicsqu464_1_GeneCatalog_20151220.gff3 ../Dicsqu464_1_AssemblyScaffolds_Repeatmasked.fasta ../Dicsqu464_bowtie2_ref
+
+bowtie2-build ./Dicsqu464_1_AssemblyScaffolds_Repeatmasked.fasta ./Dicsqu464_bowtie_index 
+bowtie2 -S ./Dicsqu464_bowtie_index ./Ds2w1.fq.gz > Ds2w1.sam
+ samtools view -bS Sample_NHZY.sam >Sample_NHZY.bam
+samtools flagstat Sample_NHZY.bam >Sample_NHZY_mapped_bowtie_summary
+bowtie2 -x ./Dicsqu464_bowtie_index ./Ds2w1.fq > Ds2w1.sam
+samtools view -bS Ds2w1.sam >Ds2w1.bam
+samtools sort Sample_NHZY.bam Sample_NHZY_sorted  
+samtools view -h -o Ds2w1.sorted.sam Ds2w1.sorted.bam
+
+bowtie2 -x ../genome_assembly/Neosp1_bowtie_index -1 Sample_NHZY.R1_sequence.fq.gz -2 Sample_NHZY.R2_sequence.fq.gz -S Sample_NHZY.sam
+
+htseq-count -s=no -f=bam -i=transcriptId Fp3w2.sorted.bam combined_Dicsqu464_Fompi3.gff >Fp3w2_counts2
+
+htseq-count -s=no -f=bam -m intersection-strict -i=transcriptId batwt_hits.bam Aspni_NRRL3_1_GeneCatalog_genes_20140311.gff >batwt_count
+
+
+
+???????,???????bam??????:
+for in in *sam
+do
+echo $i
+/home/mao/ htseq-count $i ./xx.gtf >$i.count
+done
+
+
+## ??bam??????caffold1??????,????sam????
+samtools view abc.bam scaffold1 > scaffold1.sam
+
+
